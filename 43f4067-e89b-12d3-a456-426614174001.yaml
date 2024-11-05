@@ -1,0 +1,19 @@
+title: Services Running On User Accounts
+id: 143f4067-e89b-12d3-a456-426614174001
+description: |
+  Get all services and exclude the ones running under Service User Accounts. Services running under regular user contexts are uncommon and can indicate lateral movement or persistence.
+references:
+  - https://osquery.io/docs/tables/#users
+author: '@Defensivedepth'
+date: 2024-11-02
+status: experimental
+level: high
+category: authentication
+os: 
+  - windows
+sql: |
+  SELECT description, display_name, name, path, pid, service_type, start_type, status, user_account FROM services WHERE NOT (user_account LIKE "%LocalSystem" OR user_account LIKE "%LocalService" OR user_account LIKE "%NetworkService" OR user_account == null)
+tags:
+  - osquery
+  - authentication
+  - unauthorized_access
